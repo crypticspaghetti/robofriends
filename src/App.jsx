@@ -2,6 +2,7 @@ import { Component } from "react";
 import CardList from "./CardList";
 import { robots } from "./robots";
 import SearchBox from "./SearchBox";
+import logo from "./logo.png";
 
 class App extends Component {
   constructor() {
@@ -24,7 +25,7 @@ class App extends Component {
     });
     return (
       <div className="tc">
-        <h1>RoboFriends</h1>
+        <img src={logo} className="w-25 mt3" alt="logo" />
         <SearchBox onChange={this.onSearchChange} />
         <CardList listItems={filteredRobots} />
       </div>
