@@ -24,26 +24,23 @@ class App extends Component {
   };
 
   render() {
-    const filteredRobots = this.state.robots.filter((robot) => {
-      return robot.name
-        .toLowerCase()
-        .includes(this.state.searchField.toLowerCase());
+    const { robots, searchField } = this.state;
+    const filteredRobots = robots.filter((robot) => {
+      return robot.name.toLowerCase().includes(searchField.toLowerCase());
     });
-    if (this.state.robots.length === 0) {
-      return <h1 className="tc f3 lightest-blue">Loading...</h1>;
-    } else {
-      return (
-        <>
-          <div className="vh-25 w-25 center tc">
-            <img src={logo} className="w-50 mt3" alt="logo" />
-            <SearchBox onChange={this.onSearchChange} />
-          </div>
-          <Scroll className="vh-75 tc">
-            <CardList listItems={filteredRobots} />
-          </Scroll>
-        </>
-      );
-    }
+    return !robots.length ? (
+      <h1 className="tc f3 lightest-blue">Loading...</h1>
+    ) : (
+      <>
+        <div className="vh-25 w-25 center tc">
+          <img src={logo} className="w-50 mt3" alt="logo" />
+          <SearchBox onChange={this.onSearchChange} />
+        </div>
+        <Scroll className="vh-75 tc">
+          <CardList listItems={filteredRobots} />
+        </Scroll>
+      </>
+    );
   }
 }
 
