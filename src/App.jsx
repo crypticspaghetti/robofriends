@@ -2,6 +2,7 @@ import { Component } from "react";
 import CardList from "./CardList";
 import SearchBox from "./SearchBox";
 import logo from "./logo.png";
+import Scroll from "./Scroll";
 
 class App extends Component {
   constructor() {
@@ -32,11 +33,15 @@ class App extends Component {
       return <h1 className="tc f3 lightest-blue">Loading...</h1>;
     } else {
       return (
-        <div className="tc">
-          <img src={logo} className="w-25 mt3" alt="logo" />
-          <SearchBox onChange={this.onSearchChange} />
-          <CardList listItems={filteredRobots} />
-        </div>
+        <>
+          <div className="vh-25 w-25 center tc">
+            <img src={logo} className="w-50 mt3" alt="logo" />
+            <SearchBox onChange={this.onSearchChange} />
+          </div>
+          <Scroll className="vh-75 tc">
+            <CardList listItems={filteredRobots} />
+          </Scroll>
+        </>
       );
     }
   }
