@@ -10,9 +10,20 @@ const App = () => {
   const [searchField, setSearchField] = useState("");
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((users) => setRobots(users));
+    const fetchUsers = async () => {
+      try {
+        const response = await window.fetch(
+          "https://jsonplaceholder.typicode.com/users"
+        );
+        if (!response.ok) throw Error(response.statusText);
+
+        const users = await response.json();
+        setRobots(users);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchUsers();
   }, []);
 
   const filteredRobots = robots.filter((robot) => {
