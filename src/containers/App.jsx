@@ -1,50 +1,39 @@
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import CardList from "../components/CardList";
 import ErrorBoundary from "../components/ErrorBoundary";
 import Scroll from "../components/Scroll";
 import SearchBox from "../components/SearchBox";
 import logo from "./logo.png";
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      robots: [],
-      searchField: "",
-    };
-  }
+const App = () => {
+  const [robots, setRobots] = useState([]);
+  const [searchField, setSearchField] = useState("");
 
-  componentDidMount() {
+  useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
-      .then((users) => this.setState({ robots: users }));
-  }
+      .then((users) => setRobots(users));
+  }, []);
 
-  onSearchChange = (event) => {
-    this.setState({ searchField: event.target.value });
-  };
+  const filteredRobots = robots.filter((robot) => {
+    return robot.name.toLowerCase().includes(searchField.toLowerCase());
+  });
 
-  render() {
-    const { robots, searchField } = this.state;
-    const filteredRobots = robots.filter((robot) => {
-      return robot.name.toLowerCase().includes(searchField.toLowerCase());
-    });
-    return !robots.length ? (
-      <h1 className="tc f3 lightest-blue">Loading...</h1>
-    ) : (
-      <>
-        <div className="vh-25 w-25 center tc">
-          <img src={logo} className="w-50 mt3" alt="logo" />
-          <SearchBox onChange={this.onSearchChange} />
-        </div>
-        <Scroll className="vh-75 tc">
-          <ErrorBoundary>
-            <CardList listItems={filteredRobots} />
-          </ErrorBoundary>
-        </Scroll>
-      </>
-    );
-  }
-}
+  return !robots.length ? (
+    <h1 className="tc f3 lightest-blue">Loading...</h1>
+  ) : (
+    <>
+      <div className="vh-25 w-25 center tc">
+        <img src={logo} className="w-50 mt3" alt="logo" />
+        <SearchBox onChange={(e) => setSearchField(e.target.value)} />
+      </div>
+      <Scroll className="vh-75 tc">
+        <ErrorBoundary>
+          <CardList listItems={filteredRobots} />
+        </ErrorBoundary>
+      </Scroll>
+    </>
+  );
+};
 
 export default App;
