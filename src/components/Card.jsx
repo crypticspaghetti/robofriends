@@ -1,5 +1,4 @@
-const Card = ({ name, username, email }) => {
-  return (
+const Card = ({ name, username, email }) => (
     <div className="bg-light-green dib br3 pa3 ma2 bw2 shadow-5 grow">
       <img
         src={`https://robohash.org/${username}?200x200`}
@@ -11,6 +10,5 @@ const Card = ({ name, username, email }) => {
       </div>
     </div>
   );
-};
 
 export default Card;
